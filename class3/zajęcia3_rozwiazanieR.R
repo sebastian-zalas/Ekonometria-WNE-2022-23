@@ -16,9 +16,11 @@ library(ggplot2)
 # ustaw folder roboczy !!!
 #setwd("")
 
-# 1. Zaimportuj dane
-firms1 = read.table("firms_long_2002.csv", sep="\t", header=TRUE)
-industry_codes = read.table("industry2002.csv", sep="\t", header=TRUE, quote = "")
+# 1. Zaimportuj dane 
+# ponieważ wzruciłem dane do githuba, można je pobrać bezpośrednio z sieci i załadowac do R
+# można też pobrać je, zapisać lokalnie i załadować R
+firms1 = read.table("https://raw.githubusercontent.com/sebastian-zalas/Ekonometria-WNE-2022-23/main/class3/firms_long_2002.csv", sep="\t", header=TRUE)
+industry_codes = read.table("https://raw.githubusercontent.com/sebastian-zalas/Ekonometria-WNE-2022-23/main/class3/industry2002.csv", sep="\t", header=TRUE, quote = "")
 
 # 2. połącz dane po zmiennej 'id' w jeden zbiór. Zostaw w pamięci tylko finałową ramkę danych.
 # sposób 1 - base R
@@ -90,7 +92,7 @@ hist(firms$AV, main="Histogram wartości dodanej", xlab="Wartość dodana")
 # rozkład jest bardzo skoncetrowany wokół lewej strony
 
 # histogram logarytmu wartości dodanej (lnAV)
-hist(log(firms$AV), main="Histogram logarytmu wartości dodanej", xlab="Wartość dodana")
+hist(log(firms$AV), main="Histogram logarytmu wartości dodanej", xlab="Log wartości dodanej")
 # kiedy spojrzymy na rozkład logarytmu, wpływ skrajnych wartości jest ograniczony
 # teraz można lepiej ocenić rozkład danych
 
@@ -117,11 +119,9 @@ sumstats = firms %>% select(AV, TOAS, EMPL, STAF) %>% sumtable(, out='return',
                                                              'pctile(x)[90]'))
 sumstats
 
-# 8. Teraz oblicz tzw. labor share czyli stosunek płac do wartości dodanej, na poziomie firmy, 
+# 8. Teraz oblicz tzw. labor share czyli stosunek płac do wartości dodanej
 # na poziomie sektora (przemysł vs usługi), oraz dla całego zbioru danych. 
 # Narysuj wykres przebiegu obliczonych wskaźników w czasie.
-
-firms$individual_labor_share = firms$STAF / firms$AV
 
 # stwórzmy zbiór danych na poziomie sektora i roku, tzn wysumujmy wartości na poziomie sektora i roku.
 aggregated = firms %>% 
@@ -138,7 +138,7 @@ aggregated_wide$labor_share_manuf = (aggregated_wide$STAF.x) /(aggregated_wide$A
 aggregated_wide$labor_share_servi = (aggregated_wide$STAF.y) /(aggregated_wide$AV.y) 
 
 # wykres
-plot(aggregated_wide$year, aggregated_wide$labor_share_manuf , type = "b", frame = FALSE, pch = 19, xlim=c(1996, 2001), ylim=c(0, 1),
+plot(aggregated_wide$year, aggregated_wide$labor_share_manuf , type = "b", frame = FALSE, pch = 19, xlim=c(1995, 2001), ylim=seq(0, 1),
      col = "red", xlab = "Year", ylab = "labor share")
 # dodaj następną linię
 lines(aggregated_wide$year, aggregated_wide$labor_share_servi , pch = 18, col = "blue", type = "b", lty = 2)
@@ -149,10 +149,10 @@ lines(aggregated_wide$year, aggregated_wide$labor_share_total , pch = 18, col = 
 legend("topleft", legend=c("Przemysł", "Usługi", "Razem"),
        col=c("red", "blue", "green"), lty = 1:3, cex=0.8)
 
-
-# 9. Spróbuj utworzyć zmienną opisującą wiek firmy. Czy istnieje zależność
+# 9. Utwórz zmienną opisującą wiek firmy oraz labor share na poziomie fimry. Czy istnieje zależność
 # między wiekiem firmy a np.labor share. Narysuj wykres rozrzutu (scatterplot). 
 # Zrób takie wykresy również dla innych zmiennych.
+firms$individual_labor_share = firms$STAF / firms$AV
 class(firms$year_inc)
 # zamień character na numeric
 firms$year_inc_numeric = as.numeric(firms$year_inc)
