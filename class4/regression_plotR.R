@@ -7,7 +7,7 @@ rm(list = ls())
 set.seed(1234)
 
 # working directory - set you preferred folder
-setwd("C:\\Users\\alter-ego\\OneDrive\\Pulpit\\ekometrics\\class4")
+# setwd()
 
 #Generate the independent variable and the error
 x1 = rnorm(30, 1, 2)
