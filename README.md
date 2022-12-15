@@ -14,7 +14,7 @@ Repozytorium zawiera materiały do kursu ekonometrii na WNE UW w sem. zimowym 20
 8. Zmienne binarne i kategoryczne.  
 8. Zastosowanie interakcji i wielomianu.  
 9. Twierdzenie Gaussa-Markowa.  
-10. Heteroskeadstyczność składnika losowego.  
+10. Heteroskedastyczność składnika losowego.  
 11. Testowanie hipotez.  
 12. Problem zmiennych pominiętych i współliniowość.  
 13. Testowanie formy funkcyjnej oraz outliery.  
